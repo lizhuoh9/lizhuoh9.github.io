@@ -195,22 +195,22 @@ body {
 
 /* ---- Hero ------------------------------------------------- */
 .display {
-  font-size: clamp(2.5rem, 7vw, 4.5rem);
-  font-weight: 700;
-  line-height: 0.92;
-  letter-spacing: -0.04em;
+  font-size: clamp(1.875rem, 4vw, 3rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
 }
 .display span { display: block; }
 .display-en {
   white-space: nowrap;
 }
 .display-zh {
-  font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
   font-weight: 500;
-  line-height: 1;
-  letter-spacing: -0.01em;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
   color: var(--color-ink-soft);
-  margin-top: 0.35em;
+  margin-top: 0.3em;
   font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB",
                "Source Han Sans SC", "Noto Sans CJK SC", var(--font-sans);
 }
