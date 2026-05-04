@@ -1,0 +1,430 @@
+/* ============================================================
+   Zhuoheng Li — personal homepage
+   Style: Swiss International Typographic
+   No frameworks. No build step. Single stylesheet.
+   ============================================================ */
+
+/* ---- Reset (minimal) -------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+img, svg { display: block; max-width: 100%; height: auto; }
+ol, ul { list-style: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---- Design tokens ---------------------------------------- */
+:root {
+  --color-bg: #FAFAFA;
+  --color-ink: #0A0A0A;
+  --color-ink-soft: #5C5C5C;
+  --color-accent: #E63946;
+  --color-rule: #E5E5E5;
+
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+  --space-8: 8rem;
+
+  --max-w: 1280px;
+  --pad-x: clamp(1.5rem, 5vw, 4rem);
+  --header-h: 64px;
+
+  --duration-fast: 150ms;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---- Base ------------------------------------------------- */
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-bg);
+}
+
+.wrap {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding-inline: var(--pad-x);
+}
+
+/* Skip link for keyboard users */
+.skip-link {
+  position: absolute;
+  left: 0;
+  top: -100px;
+  background: var(--color-ink);
+  color: var(--color-bg);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  z-index: 100;
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* ---- Header ----------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-rule);
+  height: var(--header-h);
+}
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+.logo {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  font-weight: 500;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+.logo:hover { color: var(--color-accent); }
+
+.site-header nav {
+  display: flex;
+  gap: clamp(1rem, 2.5vw, 2.5rem);
+}
+.site-header nav a {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--color-ink);
+  text-decoration: none;
+  position: relative;
+  padding-block: 0.25rem;
+  transition: color var(--duration-fast) var(--ease);
+}
+.site-header nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-fast) var(--ease);
+}
+.site-header nav a:hover {
+  color: var(--color-accent);
+}
+.site-header nav a:hover::after {
+  transform: scaleX(1);
+}
+
+@media (max-width: 640px) {
+  .site-header nav { gap: var(--space-2); }
+  .site-header nav a { font-size: 0.75rem; }
+}
+
+/* ---- Section scaffolding ---------------------------------- */
+.hero,
+.section {
+  scroll-margin-top: calc(var(--header-h) + 16px);
+  padding-block: clamp(3rem, 8vh, 6rem);
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.hero {
+  padding-block: clamp(4rem, 12vh, 9rem) clamp(4rem, 14vh, 9rem);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: minmax(120px, 1fr) 5fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: start;
+  }
+}
+
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--color-ink-soft);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: var(--space-1);
+}
+
+.section-title {
+  font-size: clamp(1.75rem, 3.5vw, 3rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+@media (min-width: 768px) {
+  .section-title { margin-top: -0.15em; }
+}
+
+/* ---- Hero ------------------------------------------------- */
+.display {
+  font-size: clamp(3.75rem, 12vw, 9rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+}
+.display span { display: block; }
+
+.role {
+  margin-top: clamp(var(--space-3), 4vh, var(--space-5));
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  line-height: 1.5;
+  color: var(--color-ink);
+  max-width: 40ch;
+}
+.role em {
+  font-style: italic;
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+/* ---- Prose ------------------------------------------------ */
+.prose {
+  font-size: clamp(1rem, 1.05vw, 1.125rem);
+  line-height: 1.65;
+  max-width: 62ch;
+  color: var(--color-ink);
+}
+.prose + .prose { margin-top: var(--space-3); }
+
+.prose a {
+  display: inline;
+  white-space: nowrap;
+}
+
+/* ---- Links (default) -------------------------------------- */
+a {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  transition: color var(--duration-fast) var(--ease),
+              text-decoration-thickness var(--duration-fast) var(--ease);
+}
+a:hover {
+  color: var(--color-accent);
+  text-decoration-thickness: 2px;
+}
+a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+  text-decoration: none;
+}
+
+/* ---- Research --------------------------------------------- */
+.research-list {
+  display: grid;
+  gap: var(--space-5);
+  margin-top: var(--space-4);
+}
+@media (min-width: 768px) {
+  .research-list { margin-top: 0; }
+}
+
+.research-item {
+  display: grid;
+  grid-template-columns: 4em 1fr;
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-rule);
+}
+.research-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.research-item .item-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-ink-soft);
+  letter-spacing: 0.15em;
+  padding-top: 0.5em;
+}
+.research-item h3 {
+  font-size: clamp(1.25rem, 1.6vw, 1.5rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-bottom: var(--space-1);
+}
+.research-item p {
+  color: var(--color-ink);
+  max-width: 58ch;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ---- Publications ----------------------------------------- */
+.pub-list {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+.pub-item {
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-rule);
+}
+.pub-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.pub-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--color-ink-soft);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: var(--space-1);
+}
+.pub-title {
+  font-size: clamp(1.125rem, 1.4vw, 1.25rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+  margin-bottom: var(--space-1);
+}
+.pub-authors {
+  color: var(--color-ink);
+  font-size: 0.95rem;
+  margin-bottom: var(--space-2);
+}
+.pub-authors strong {
+  font-weight: 500;
+  color: var(--color-ink);
+  border-bottom: 2px solid var(--color-accent);
+  padding-bottom: 1px;
+}
+.pub-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  font-size: 0.875rem;
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+}
+.pub-links a {
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-rule);
+  padding-bottom: 2px;
+}
+.pub-links a:hover {
+  border-bottom-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* ---- Contact ---------------------------------------------- */
+.contact-list {
+  display: grid;
+  gap: 0;
+  margin-top: var(--space-4);
+}
+@media (min-width: 768px) {
+  .contact-list { margin-top: 0; }
+}
+.contact-row {
+  display: grid;
+  grid-template-columns: 7em 1fr;
+  gap: var(--space-3);
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--color-rule);
+  align-items: baseline;
+}
+.contact-row:last-child { border-bottom: none; }
+
+.contact-row dt {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  color: var(--color-ink-soft);
+  text-transform: uppercase;
+}
+.contact-row dd a {
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4em;
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-rule);
+  padding-bottom: 2px;
+  transition: border-color var(--duration-fast) var(--ease),
+              color var(--duration-fast) var(--ease);
+}
+.contact-row dd a:hover {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+.contact-row dd a .arrow {
+  display: inline-block;
+  transition: transform var(--duration-fast) var(--ease);
+}
+.contact-row dd a:hover .arrow {
+  transform: translateX(0.4em);
+}
+
+@media (max-width: 480px) {
+  .contact-row { grid-template-columns: 5em 1fr; }
+  .research-item { grid-template-columns: 3em 1fr; }
+}
+
+/* ---- Footer ----------------------------------------------- */
+.site-footer {
+  padding-block: var(--space-5);
+  font-size: 0.75rem;
+  color: var(--color-ink-soft);
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+}
+.site-footer .wrap {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.site-footer a {
+  color: var(--color-ink-soft);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color var(--duration-fast) var(--ease),
+              border-color var(--duration-fast) var(--ease);
+}
+.site-footer a:hover {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
