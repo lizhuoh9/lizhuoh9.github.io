@@ -223,8 +223,12 @@ body {
 .avatar {
   display: block;
   width: clamp(140px, 18vw, 220px);
+  aspect-ratio: 1 / 1;
   height: auto;
   margin-top: var(--space-3);
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--color-bg);
 }
 
 /* ---- Prose ------------------------------------------------ */
