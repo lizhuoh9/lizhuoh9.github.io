@@ -157,8 +157,26 @@ body {
 }
 
 .hero {
-  padding-block: clamp(4rem, 12vh, 9rem) clamp(4rem, 14vh, 9rem);
+  padding-block: clamp(4rem, 11vh, 7.5rem);
 }
+.hero-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.75rem, 4.5vw, 3rem);
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .hero-layout {
+    grid-template-columns: auto 1fr;
+    gap: clamp(2.5rem, 6vw, 5rem);
+  }
+}
+.hero-portrait { display: flex; }
+.hero-portrait .avatar {
+  width: clamp(180px, 26vw, 280px);
+  margin-top: 0;
+}
+.hero-body { max-width: 36rem; }
 
 .grid {
   display: grid;
@@ -228,8 +246,7 @@ body {
   font-weight: 500;
 }
 .hero .contact-list {
-  margin-top: clamp(var(--space-4), 5vh, var(--space-5));
-  max-width: 36rem;
+  margin-top: clamp(var(--space-4), 4.5vh, var(--space-5));
 }
 
 /* ---- Avatar ----------------------------------------------- */
