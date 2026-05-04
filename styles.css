@@ -266,10 +266,12 @@ body {
     grid-template-columns: 1fr 1fr;
     column-gap: clamp(1.5rem, 3vw, 2.5rem);
   }
-  /* In a 2-column grid the last visual row contains the last two children;
-     drop their bottom borders so no orphan line dangles below the left cell. */
-  .hero .contact-row:nth-last-child(-n+2) {
-    border-bottom: none;
+  /* In the 2-column grid every cell keeps its bottom border so the table
+     reads symmetrically across both columns (CV-row style). Override the
+     global :last-child rule that would otherwise blank ORCID's line. */
+  .hero .contact-row,
+  .hero .contact-row:last-child {
+    border-bottom: 1px solid var(--color-rule);
   }
 }
 
