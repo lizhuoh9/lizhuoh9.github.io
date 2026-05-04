@@ -62,7 +62,7 @@
         <a href="#education">Education</a>
         <a href="#research">Research</a>
         <a href="#publications">Publications</a>
-        <a href="projects.html">Projects</a>
+        <a href="github.html">GitHub</a>
         <a href="activities.html">Activities</a>
       </nav>
     </div>
@@ -262,6 +262,40 @@
       </div>
     </section>
 
+    <section id="github" class="section" aria-labelledby="github-title">
+      <div class="wrap grid">
+        <div class="col-meta">
+          <span class="section-num">05</span>
+          <h2 id="github-title" class="section-title">GitHub</h2>
+        </div>
+        <div class="col-main">
+          <ol class="repo-list" id="repo-preview" aria-live="polite">
+            <li class="repo-empty">Loading repositories &hellip;</li>
+          </ol>
+          <p class="pub-tail">
+            <a href="github.html">All repositories <span aria-hidden="true" class="arrow">&rarr;</span></a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="activities" class="section" aria-labelledby="activities-title">
+      <div class="wrap grid">
+        <div class="col-meta">
+          <span class="section-num">06</span>
+          <h2 id="activities-title" class="section-title">Activities</h2>
+        </div>
+        <div class="col-main">
+          <ol class="activity-list" id="activity-preview" aria-live="polite">
+            <li class="activity-empty">Loading entries &hellip;</li>
+          </ol>
+          <p class="pub-tail">
+            <a href="activities.html">All activities <span aria-hidden="true" class="arrow">&rarr;</span></a>
+          </p>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer class="site-footer">
@@ -270,5 +304,89 @@
       <p><a href="#top">Back to top &uarr;</a></p>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      const escape = s => String(s).replace(/[&<>"']/g, c => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+      ));
+
+      const REPO_DESC = {
+        'lizhuoh9.github.io': 'Source for this personal homepage.',
+        'Squid-Robot':       'Hardware design and control for the soft robotic squid platform.',
+        'squid-robot-slam':  'SLAM and state estimation for the soft robotic squid.',
+        'Thrust-Analysis':   'Thrust measurement and analysis for soft underwater actuators.',
+        'verilog':           'Verilog modules and FPGA experiments.',
+        'EasyFig':           'Figure-making utility.',
+        'learning':          'Personal learning notes and code experiments.',
+      };
+
+      const repoList = document.getElementById('repo-preview');
+      fetch('https://api.github.com/users/lizhuoh9/repos?sort=pushed&per_page=10&type=owner', {
+        headers: { 'Accept': 'application/vnd.github+json' }
+      })
+        .then(r => r.ok ? r.json() : Promise.reject(new Error('GitHub ' + r.status)))
+        .then(repos => {
+          if (!Array.isArray(repos) || !repos.length) {
+            repoList.innerHTML = '<li class="repo-empty">No public repositories.</li>';
+            return;
+          }
+          const top = repos.slice(0, 3);
+          repoList.innerHTML = top.map(r => {
+            const desc = REPO_DESC[r.name] || r.description || '';
+            const descHtml = desc ? `<p class="repo-desc">${escape(desc)}</p>` : '';
+            const date = r.pushed_at.slice(0, 10).replace(/-/g, '.');
+            const lang = r.language ? `<span class="repo-lang">${escape(r.language)}</span>` : '';
+            return `
+              <li class="repo-item">
+                <h3 class="repo-name">
+                  <a href="${escape(r.html_url)}" target="_blank" rel="noopener noreferrer">${escape(r.name)}</a>
+                </h3>
+                ${descHtml}
+                <div class="repo-meta">
+                  <span class="repo-date">${date}</span>
+                  ${lang}
+                </div>
+              </li>
+            `;
+          }).join('');
+        })
+        .catch(err => {
+          repoList.innerHTML = `<li class="repo-empty">Could not load (${escape(err.message)}). <a href="github.html">All repositories &rarr;</a></li>`;
+        });
+
+      const formatDate = iso => {
+        const m = String(iso).match(/^(\d{4})-(\d{2})-(\d{2})/);
+        return m ? `${m[1]}.${m[2]}.${m[3]}` : escape(iso);
+      };
+      const actList = document.getElementById('activity-preview');
+      fetch('posts.json', { cache: 'no-cache' })
+        .then(r => r.ok ? r.json() : Promise.reject(new Error('posts.json ' + r.status)))
+        .then(posts => {
+          if (!Array.isArray(posts) || !posts.length) {
+            actList.innerHTML = '<li class="activity-empty">No entries yet.</li>';
+            return;
+          }
+          posts.sort((a, b) => String(b.date).localeCompare(String(a.date)));
+          const top = posts.slice(0, 2);
+          actList.innerHTML = top.map(p => {
+            const desc = p.description ? `<p class="activity-desc">${escape(p.description)}</p>` : '';
+            const title = p.title ? `<h3 class="activity-title">${escape(p.title)}</h3>` : '';
+            return `
+              <li class="activity-item">
+                <span class="activity-date">${formatDate(p.date)}</span>
+                <div class="activity-body">
+                  ${title}
+                  ${desc}
+                </div>
+              </li>
+            `;
+          }).join('');
+        })
+        .catch(err => {
+          actList.innerHTML = `<li class="activity-empty">Could not load (${escape(err.message)}). <a href="activities.html">All activities &rarr;</a></li>`;
+        });
+    })();
+  </script>
 </body>
 </html>
