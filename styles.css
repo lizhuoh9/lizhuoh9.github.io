@@ -167,13 +167,17 @@ body {
 }
 @media (min-width: 768px) {
   .hero-layout {
-    grid-template-columns: auto 1fr;
-    gap: clamp(2.5rem, 6vw, 5rem);
+    grid-template-columns: clamp(220px, 26vw, 320px) 1fr;
+    gap: clamp(2rem, 5vw, 4.5rem);
   }
 }
-.hero-portrait { display: flex; }
+.hero-portrait {
+  display: flex;
+  justify-content: flex-start;
+}
 .hero-portrait .avatar {
-  width: clamp(180px, 26vw, 280px);
+  width: 100%;
+  max-width: 280px;
   margin-top: 0;
 }
 .hero-body { max-width: 36rem; }
