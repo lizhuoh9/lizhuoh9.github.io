@@ -579,13 +579,13 @@ a:focus-visible {
   color: var(--color-ink);
 }
 
-/* ---- Journal ---------------------------------------------- */
-.journal-list {
+/* ---- Activities ------------------------------------------- */
+.activity-list {
   display: grid;
   gap: var(--space-5);
   margin-top: var(--space-4);
 }
-.journal-item {
+.activity-item {
   display: grid;
   grid-template-columns: 7em 1fr;
   gap: var(--space-3);
@@ -593,11 +593,11 @@ a:focus-visible {
   border-bottom: 1px solid var(--color-rule);
   align-items: start;
 }
-.journal-item:last-child {
+.activity-item:last-child {
   border-bottom: none;
   padding-bottom: 0;
 }
-.journal-date {
+.activity-date {
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   color: var(--color-ink-soft);
@@ -605,32 +605,32 @@ a:focus-visible {
   padding-top: 0.45em;
   white-space: nowrap;
 }
-.journal-title {
+.activity-title {
   font-size: clamp(1.125rem, 1.4vw, 1.25rem);
   font-weight: 500;
   letter-spacing: -0.01em;
   line-height: 1.3;
   margin-bottom: var(--space-1);
 }
-.journal-desc {
+.activity-desc {
   color: var(--color-ink);
   font-size: 1rem;
   line-height: 1.6;
   max-width: 60ch;
 }
-.journal-images {
+.activity-images {
   margin-top: var(--space-3);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: var(--space-2);
 }
-.journal-images a {
+.activity-images a {
   display: block;
   text-decoration: none;
   border-bottom: none;
   padding: 0;
 }
-.journal-images img {
+.activity-images img {
   width: 100%;
   height: auto;
   display: block;
@@ -638,26 +638,26 @@ a:focus-visible {
   background: var(--color-rule);
   transition: opacity var(--duration-fast) var(--ease);
 }
-.journal-images a:hover img {
+.activity-images a:hover img {
   opacity: 0.85;
 }
-.journal-empty {
+.activity-empty {
   color: var(--color-ink-soft);
   font-family: var(--font-mono);
   font-size: 0.875rem;
   letter-spacing: 0.05em;
 }
-.journal-empty code {
+.activity-empty code {
   font-family: var(--font-mono);
   background: rgba(0, 0, 0, 0.04);
   padding: 0.05em 0.4em;
 }
 @media (max-width: 600px) {
-  .journal-item {
+  .activity-item {
     grid-template-columns: 1fr;
     gap: var(--space-1);
   }
-  .journal-date { padding-top: 0; }
+  .activity-date { padding-top: 0; }
 }
 
 /* ---- Contact ---------------------------------------------- */

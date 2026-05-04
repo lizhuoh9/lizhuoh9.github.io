@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Journal — Zhuoheng Li</title>
+  <title>Activities — Zhuoheng Li</title>
 
-  <meta name="description" content="Personal journal entries by Zhuoheng Li — moments, talks, gatherings, and notes.">
+  <meta name="description" content="Activities and moments by Zhuoheng Li — conferences, gatherings, talks, and lab life.">
   <meta name="theme-color" content="#FAFAFA">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Journal — Zhuoheng Li">
-  <meta property="og:url" content="https://lizhuoh9.github.io/journal.html">
-  <link rel="canonical" href="https://lizhuoh9.github.io/journal.html">
+  <meta property="og:title" content="Activities — Zhuoheng Li">
+  <meta property="og:url" content="https://lizhuoh9.github.io/activities.html">
+  <link rel="canonical" href="https://lizhuoh9.github.io/activities.html">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,7 +30,7 @@
         <a href="index.html#research">Research</a>
         <a href="index.html#publications">Publications</a>
         <a href="projects.html">Projects</a>
-        <a href="journal.html" aria-current="page">Journal</a>
+        <a href="activities.html" aria-current="page">Activities</a>
       </nav>
     </div>
   </header>
@@ -39,16 +39,16 @@
     <section class="section" aria-labelledby="page-title">
       <div class="wrap grid">
         <div class="col-meta">
-          <span class="section-num">Notes</span>
-          <h1 id="page-title" class="section-title">Journal</h1>
+          <span class="section-num">Recent</span>
+          <h1 id="page-title" class="section-title">Activities</h1>
         </div>
         <div class="col-main">
           <p class="prose">
             Conferences, gatherings, lab moments, and quiet days &mdash;
             posted as they happen.
           </p>
-          <ol class="journal-list" id="journal-list" aria-live="polite">
-            <li class="journal-empty">Loading entries &hellip;</li>
+          <ol class="activity-list" id="activity-list" aria-live="polite">
+            <li class="activity-empty">Loading entries &hellip;</li>
           </ol>
         </div>
       </div>
@@ -64,34 +64,33 @@
 
   <script>
     (function () {
-      const list = document.getElementById('journal-list');
+      const list = document.getElementById('activity-list');
 
       const escape = s => String(s).replace(/[&<>"']/g, c => (
         { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
       ));
 
       const formatDate = iso => {
-        // Accept "2026-05-04" or "2026-05-04T12:00" — render as 2026.05.04
         const m = String(iso).match(/^(\d{4})-(\d{2})-(\d{2})/);
         return m ? `${m[1]}.${m[2]}.${m[3]}` : escape(iso);
       };
 
       const postToHtml = p => {
         const desc = p.description
-          ? `<p class="journal-desc">${escape(p.description).replace(/\n/g, '<br>')}</p>`
+          ? `<p class="activity-desc">${escape(p.description).replace(/\n/g, '<br>')}</p>`
           : '';
         const images = (Array.isArray(p.images) && p.images.length)
-          ? `<div class="journal-images">${p.images.map(src =>
+          ? `<div class="activity-images">${p.images.map(src =>
               `<a href="${escape(src)}" target="_blank" rel="noopener">
-                 <img src="${escape(src)}" alt="${escape(p.title || 'Journal photo')}" loading="lazy">
+                 <img src="${escape(src)}" alt="${escape(p.title || 'Activity photo')}" loading="lazy">
                </a>`
             ).join('')}</div>`
           : '';
-        const title = p.title ? `<h3 class="journal-title">${escape(p.title)}</h3>` : '';
+        const title = p.title ? `<h3 class="activity-title">${escape(p.title)}</h3>` : '';
         return `
-          <li class="journal-item">
-            <span class="journal-date">${formatDate(p.date)}</span>
-            <div class="journal-body">
+          <li class="activity-item">
+            <span class="activity-date">${formatDate(p.date)}</span>
+            <div class="activity-body">
               ${title}
               ${desc}
               ${images}
@@ -107,14 +106,14 @@
         })
         .then(posts => {
           if (!Array.isArray(posts) || posts.length === 0) {
-            list.innerHTML = '<li class="journal-empty">No entries yet. Add one to <code>posts.json</code>.</li>';
+            list.innerHTML = '<li class="activity-empty">No entries yet. Add one to <code>posts.json</code>.</li>';
             return;
           }
           posts.sort((a, b) => String(b.date).localeCompare(String(a.date)));
           list.innerHTML = posts.map(postToHtml).join('');
         })
         .catch(err => {
-          list.innerHTML = `<li class="journal-empty">Could not load entries (${escape(err.message)}).</li>`;
+          list.innerHTML = `<li class="activity-empty">Could not load entries (${escape(err.message)}).</li>`;
         });
     })();
   </script>

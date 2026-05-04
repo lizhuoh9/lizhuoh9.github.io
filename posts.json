@@ -2,7 +2,7 @@
   {
     "date": "2026-05-04",
     "title": "First entry",
-    "description": "This is a placeholder entry. Edit posts.json (in the repo root) to add your own entries: date, title, description, and an optional images array. Drop any photos into assets/journal/. Newest entries are shown first automatically.",
+    "description": "This is a placeholder entry. Edit posts.json (in the repo root) to add your own entries: date, title, description, and an optional images array. Drop any photos into assets/activities/. Newest entries are shown first automatically.",
     "images": []
   }
 ]
