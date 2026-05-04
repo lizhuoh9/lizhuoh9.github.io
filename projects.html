@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projects — Zhuoheng Li</title>
+
+  <meta name="description" content="Open-source projects and repositories by Zhuoheng Li, auto-synced from GitHub.">
+  <meta name="theme-color" content="#FAFAFA">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Projects — Zhuoheng Li">
+  <meta property="og:url" content="https://lizhuoh9.github.io/projects.html">
+  <link rel="canonical" href="https://lizhuoh9.github.io/projects.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a href="index.html" class="logo" aria-label="Home">ZHL</a>
+      <nav aria-label="Section navigation">
+        <a href="index.html#about">About</a>
+        <a href="index.html#education">Education</a>
+        <a href="index.html#research">Research</a>
+        <a href="index.html#publications">Publications</a>
+        <a href="projects.html" aria-current="page">Projects</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section" aria-labelledby="page-title">
+      <div class="wrap grid">
+        <div class="col-meta">
+          <span class="section-num">Projects</span>
+          <h1 id="page-title" class="section-title">Repositories</h1>
+        </div>
+        <div class="col-main">
+          <p class="prose">
+            Open-source repositories on
+            <a href="https://github.com/lizhuoh9" target="_blank" rel="noopener noreferrer">github.com/lizhuoh9</a>,
+            sorted by most recent push. The list updates automatically each time
+            you visit.
+          </p>
+          <ol class="repo-list" id="repo-list" aria-live="polite">
+            <li class="repo-empty">Loading repositories &hellip;</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>&copy; 2026 Zhuoheng Li</p>
+      <p><a href="#top">Back to top &uarr;</a></p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      // EDIT: short descriptions keyed by repo name. Anything here overrides
+      // the description GitHub may have set. Add or edit entries freely.
+      const DESCRIPTIONS = {
+        'lizhuoh9.github.io': 'Source for this personal homepage.',
+        'Squid-Robot':       'Hardware design and control for the soft robotic squid platform.',
+        'squid-robot-slam':  'SLAM and state estimation for the soft robotic squid.',
+        'Thrust-Analysis':   'Thrust measurement and analysis for soft underwater actuators.',
+        'verilog':           'Verilog modules and FPGA experiments.',
+        'EasyFig':           'Figure-making utility.',
+        'learning':          'Personal learning notes and code experiments.',
+      };
+
+      const list = document.getElementById('repo-list');
+      const USER = 'lizhuoh9';
+      const API = `https://api.github.com/users/${USER}/repos?sort=pushed&per_page=30&type=owner`;
+
+      const escape = s => String(s).replace(/[&<>"']/g, c => (
+        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+      ));
+
+      const formatDate = iso => {
+        const d = new Date(iso);
+        const y = d.getUTCFullYear();
+        const m = String(d.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(d.getUTCDate()).padStart(2, '0');
+        return `${y}.${m}.${day}`;
+      };
+
+      const repoToHtml = r => {
+        const customDesc = DESCRIPTIONS[r.name];
+        const useDesc = customDesc || r.description;
+        const desc = useDesc ? `<p class="repo-desc">${escape(useDesc)}</p>` : '';
+        const meta = [];
+        meta.push(`<span class="repo-date">${formatDate(r.pushed_at)}</span>`);
+        if (r.language) meta.push(`<span class="repo-lang">${escape(r.language)}</span>`);
+        if (r.stargazers_count > 0) meta.push(`<span class="repo-stars">&#9733; ${r.stargazers_count}</span>`);
+        if (r.fork) meta.push('<span class="repo-fork">fork</span>');
+        return `
+          <li class="repo-item">
+            <h3 class="repo-name">
+              <a href="${r.html_url}" target="_blank" rel="noopener noreferrer">${escape(r.name)}</a>
+            </h3>
+            ${desc}
+            <div class="repo-meta">${meta.join('')}</div>
+          </li>
+        `;
+      };
+
+      fetch(API, { headers: { 'Accept': 'application/vnd.github+json' } })
+        .then(r => {
+          if (!r.ok) throw new Error('GitHub API ' + r.status);
+          return r.json();
+        })
+        .then(repos => {
+          if (!Array.isArray(repos) || repos.length === 0) {
+            list.innerHTML = '<li class="repo-empty">No public repositories yet.</li>';
+            return;
+          }
+          list.innerHTML = repos.map(repoToHtml).join('');
+        })
+        .catch(err => {
+          list.innerHTML = `
+            <li class="repo-empty">
+              Could not load repositories from GitHub
+              (${escape(err.message)}).
+              <a href="https://github.com/${USER}" target="_blank" rel="noopener noreferrer">
+                Visit github.com/${USER} &rarr;
+              </a>
+            </li>
+          `;
+        });
+    })();
+  </script>
+</body>
+</html>

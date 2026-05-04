@@ -142,6 +142,12 @@ body {
 .site-header nav a:hover::after {
   transform: scaleX(1);
 }
+.site-header nav a[aria-current="page"] {
+  color: var(--color-accent);
+}
+.site-header nav a[aria-current="page"]::after {
+  transform: scaleX(1);
+}
 
 @media (max-width: 640px) {
   .site-header nav { gap: var(--space-2); }
@@ -495,6 +501,73 @@ a:focus-visible {
 }
 .pub-tail a:hover .arrow {
   transform: translateX(0.4em);
+}
+
+/* ---- Repos (projects page) -------------------------------- */
+.repo-list {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+.repo-item {
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-rule);
+}
+.repo-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.repo-name {
+  font-size: clamp(1.125rem, 1.4vw, 1.25rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+}
+.repo-name a {
+  color: inherit;
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size var(--duration-fast) var(--ease),
+              color var(--duration-fast) var(--ease);
+  padding-bottom: 2px;
+}
+.repo-name a:hover {
+  color: var(--color-accent);
+  background-size: 100% 1px;
+}
+.repo-desc {
+  margin-top: var(--space-1);
+  color: var(--color-ink);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  max-width: 60ch;
+}
+.repo-meta {
+  margin-top: var(--space-2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--color-ink-soft);
+  text-transform: uppercase;
+}
+.repo-fork {
+  color: var(--color-ink-soft);
+  opacity: 0.65;
+}
+.repo-empty {
+  color: var(--color-ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+}
+.repo-empty a {
+  color: var(--color-ink);
 }
 
 /* ---- Contact ---------------------------------------------- */
