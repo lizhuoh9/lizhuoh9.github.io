@@ -225,11 +225,6 @@ body {
   width: clamp(140px, 18vw, 220px);
   height: auto;
   margin-top: var(--space-3);
-  filter: grayscale(1) contrast(1.05);
-  transition: filter 240ms var(--ease);
-}
-.avatar:hover {
-  filter: grayscale(0) contrast(1);
 }
 
 /* ---- Prose ------------------------------------------------ */
