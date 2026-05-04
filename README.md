@@ -29,10 +29,10 @@ All content sits in `index.html`. Editable spots are marked with `<!-- EDIT: ...
 
 | Section       | What to update                                                |
 |---------------|---------------------------------------------------------------|
+| Profile (Hero)| Name, role lines, and the contact rows (email / Scholar / GitHub / ORCID). Avatar at `assets/avatar.png` |
 | About         | Replace the two `<p class="prose">` blocks                    |
 | Research      | Edit each `<li class="research-item">` (3 cards by default)   |
 | Publications  | Duplicate `<li class="pub-item">` blocks; fill year/venue/title/authors/links. Bold your own name with `<strong>` |
-| Contact       | Already filled; only change if your email or links change     |
 
 Tip: Bold your name in author lists with `<strong>Zhuoheng Li</strong>`. The CSS underlines it in red automatically.
 
