@@ -66,6 +66,10 @@
 
   <script>
     (function () {
+      // EDIT: repo names to hide from this page. Add any repo whose name
+      // appears in this list will be filtered out before rendering.
+      const EXCLUDE = ['lizhuoh9.github.io'];
+
       // EDIT: short descriptions keyed by repo name. Anything here overrides
       // the description GitHub may have set. Add or edit entries freely.
       const DESCRIPTIONS = {
@@ -120,6 +124,9 @@
           return r.json();
         })
         .then(repos => {
+          if (Array.isArray(repos)) {
+            repos = repos.filter(r => !EXCLUDE.includes(r.name));
+          }
           if (!Array.isArray(repos) || repos.length === 0) {
             list.innerHTML = '<li class="repo-empty">No public repositories yet.</li>';
             return;

@@ -311,8 +311,10 @@
         { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
       ));
 
+      // EDIT: repo names to hide from the homepage preview.
+      const EXCLUDE = ['lizhuoh9.github.io'];
+
       const REPO_DESC = {
-        'lizhuoh9.github.io': 'Source for this personal homepage.',
         'Squid-Robot':       'Hardware design and control for the soft robotic squid platform.',
         'squid-robot-slam':  'SLAM and state estimation for the soft robotic squid.',
         'Thrust-Analysis':   'Thrust measurement and analysis for soft underwater actuators.',
@@ -327,6 +329,9 @@
       })
         .then(r => r.ok ? r.json() : Promise.reject(new Error('GitHub ' + r.status)))
         .then(repos => {
+          if (Array.isArray(repos)) {
+            repos = repos.filter(r => !EXCLUDE.includes(r.name));
+          }
           if (!Array.isArray(repos) || !repos.length) {
             repoList.innerHTML = '<li class="repo-empty">No public repositories.</li>';
             return;
